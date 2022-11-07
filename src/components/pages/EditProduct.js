@@ -1,99 +1,117 @@
-import React, { useState, useEffect } from "react";
-import './AddProduct.css'
+// import React, { useState, useEffect } from "react";
+// import { useNavigate, useParams } from "react-router-dom";
+// import useOperations from "./useOperations";
+// import * as actions from "../../actions/product"
+// import { connect } from "react-redux";
 
-import { useNavigate, useParams } from "react-router-dom";
-import { getProduct, editProduct } from "../../service/api.js";
+// import './AddProduct.css'
 
-const initualValues = {
-  isim: "",
-  cinsi: "",
-  barkod: "",
-  menşei: ""
-}
 
-const EditProduct = () => {
+// const initialFieldValues = {
+//   productName: '',
+//   productType: '',
+//   productBarcode: '',
+//   productOrigin: ''
+// }
 
-  const [product,setProduct] = useState(initualValues)
-  const navigate = useNavigate()
-  const { id } = useParams()
+// const EditProduct = () => {
+
+//   const [currentId,setCurrentId] = useState()
+//   const navigate = useNavigate()
+//   const { id } = useParams()
   
-  useEffect(() => {
-    getProductData();
-  },[])
-
-  const getProductData= async ()  => {
-    let response = await getProduct(id)
-    setProduct(response.data)
-  }
+//   const {
+//     product,
+//     setProduct,
+//     handleInputChange
+//   } = useOperations(initialFieldValues)
 
 
-  const onValueChange = (e) => {
-    setProduct({...product, [e.target.name]: e.target.value})
-  }
 
- const addProductDetails = async () => {
-     await editProduct(product,id)
-     navigate('/products')
+//   return (
+//     <div style={{ marginTop: "100px" }}>
+//       <form
+//         style={{
+//           margin: "auto",
+//           padding: "15px",
+//           maxWidth: "400px",
+//           alignContent: "center",
+//         }}
+//       >
+//         <h4>Edit Product</h4>
+//         <label htmlFor="productName"> İsim </label>
+//         <input
+//           type="text"
+//           id="productName"
+//           name="productName"
+//           placeholder="Enter Name ..."
+//           onChange={handleInputChange}
+//           value={product.productName}
 
-  }
-
-
-  return (
-    <div style={{ marginTop: "100px" }}>
-      <form
-        style={{
-          margin: "auto",
-          padding: "15px",
-          maxWidth: "400px",
-          alignContent: "center",
-        }}
-      >
-        <h4>Edit Product</h4>
-        <label htmlFor="isim"> İsim </label>
-        <input
-          type="text"
-          id="isim"
-          name="isim"
-          placeholder="Enter Name ..."
-          onChange={(e) => onValueChange(e)}
-          value={product.isim}
-
-        />        
-        <label htmlFor="barkod">Barkod </label>
-        <input
-          type="text"
-          id="barkod"
-          name="barkod"
-          placeholder="Enter Barkod ..."
-          onChange={(e) => onValueChange(e)}
-          value={product.barkod}
+//         />        
+//         <label htmlFor="productType">Barkod </label>
+//         <input
+//           type="text"
+//           id="productType"
+//           name="productType"
+//           placeholder="Enter Barkod ..."
+//           onChange={handleInputChange}
+//           value={product.productType}
           
-        />        
-        <label htmlFor="cinsi">Cinsi </label>
-        <input
-          type="text"
-          id="cinsi"
-          name="cinsi"
-          placeholder="Enter Cinsi ..."
-          onChange={(e) => onValueChange(e)}
-          value={product.cinsi}
+//         />        
+//         <label htmlFor="productBarcode">Cinsi </label>
+//         <input
+//           type="text"
+//           id="productBarcode"
+//           name="productBarcode"
+//           placeholder="Enter Cinsi ..."
+//           onChange={handleInputChange}
+//           value={product.productBarcode}
 
 
-        />        
-        <label htmlFor="menşei">Menşei </label>
-        <input
-          type="text"
-          id="menşei"
-          name="menşei"
-          placeholder="Enter menşei ..."
-          onChange={(e) => onValueChange(e)}
-          value={product.menşei}
+//         />        
+//         <label htmlFor="productOrigin">Menşei </label>
+//         <input
+//           type="text"
+//           id="productOrigin"
+//           name="productOrigin"
+//           placeholder="Enter menşei ..."
+//           onChange={handleInputChange}
+//           value={product.productOrigin}
 
-        />        
-        <button onClick={() => addProductDetails()} type="button">Edit Product</button>
-      </form>
-    </div>
-  );
-};
+//         />        
+//         <button /*onClick={() => addProductDetails()}*/ type="button">Edit Product</button>
+//       </form>
+//     </div>
+//   );
+// };
 
-export default EditProduct;
+// const mapStateToProps = state => ({
+
+//   productList:state.product.list
+
+// })
+
+// const mapActionToProps = {
+//   updateProduct: actions.update,
+// }
+
+// export default connect (mapStateToProps,mapActionToProps) (EditProduct);
+
+
+
+//   // useEffect(() => {
+//   //   getProductData();
+//   // },[])
+
+//   // const getProductData= async ()  => {
+//   //   let response = await getProduct(id)
+//   //   setProduct(response.data)
+//   // }
+
+
+// //  const addProductDetails = async () => {
+// //      await editProduct(product,id)
+// //      navigate('/products')
+
+// //   }

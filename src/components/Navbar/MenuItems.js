@@ -6,8 +6,8 @@ export const MenuItems = [
 
     },
     {
-        title: "Product List",
-        url: "product-list",
+        title: "Add Product",
+        url: "add",
         cName: 'nav-links'
 
     },

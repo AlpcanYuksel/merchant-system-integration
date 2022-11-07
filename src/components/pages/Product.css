@@ -30,6 +30,23 @@
 
 }
 
+.float-container {
+    padding: 20px;
+}
+
+.float-child-1 {
+    width: 40%;
+    float: left;
+    padding: 80px;
+} 
+
+.float-child-2 {
+    width: 55%;
+    float: left;
+    padding: 20px;
+} 
+
+
 .btn {
     border: none;
     color: white;

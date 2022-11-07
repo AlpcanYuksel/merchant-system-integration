@@ -1,39 +1,75 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import {addProduct} from "../../service/api.js";
+import React, { useState, useEffect} from "react";
+import useOperations from "./useOperations";
+import { connect } from "react-redux";
+import * as actions from "../../actions/product"
 import './AddProduct.css'
 
 
 
-const initualValues = {
-  isim: "",
-  cinsi: "",
-  barkod: "",
-  menşei: ""
+const initialFieldValues = {
+  productName: '',
+  productType: '',
+  productBarcode: '',
+  productOrigin: ''
 }
 
-const AddProduct = () => {
+const AddProduct = (props) => {
 
-  const [product,setProduct] = useState(initualValues)
-  const navigate = useNavigate()
+  //validate()
+  //validate({productName:'çikolatalım'})
+  const validate = (fieldValues = product) => {
+    let temp={}
+    
+    //temp.email =(/^$|.+@.+..+/).test(product.email)?"":"Email is not valid." or login method 
+    if('productName' in fieldValues)
+      temp.productName = fieldValues.productName?"":"This field is required."
+    if('productType' in fieldValues)
+      temp.productType = fieldValues.productType?"":"This field is required."
+    if('productBarcode' in fieldValues)
+      temp.productBarcode = fieldValues.productBarcode?"":"This field is required."
+    if('productOrigin' in fieldValues)
+      temp.productOrigin = fieldValues.productOrigin?"":"This field is required."
 
+    setErrors({
+      ...temp
+    })
 
-
-  const onValueChange = (e) => {
-    setProduct({...product, [e.target.name]: e.target.value})
+    if(fieldValues === product) 
+      return Object.values(temp).every(x => x ==="")
   }
 
-  const addProductDetails = async () => {
-    await addProduct(product)
-    navigate('/products')
+  const {
+    product,
+    setProduct,
+    errors,
+    setErrors, 
+    handleInputChange
+  } = useOperations(initialFieldValues,validate)
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(validate()) 
+    {
+      if(props.currentId === 0 )
+      props.createProduct(product,()=>{window.alert('Eklendi')})
+      else
+      props.updateProduct(props.currentId,product,()=>{window.alert('Güncellendi')})
+    }
   }
 
-
+  useEffect(()=>{
+    if(props.currentId != 0)
+    setProduct({
+      ...props.productList?.find(x => x.id == props.currentId)
+    })
+  },[props.currentId])
+  
   return (
-    <div style={{ marginTop: "100px" }}>
+    <div>
       <form
+      autoComplete="off"
+      onSubmit={handleSubmit}
         style={{
           margin: "auto",
           padding: "15px",
@@ -41,49 +77,84 @@ const AddProduct = () => {
           alignContent: "center",
         }}
       >
-        
-        <label htmlFor="isim"> İsim </label>
+        <label htmlFor="productName"> Ürün İsmi </label>
         <input
           type="text"
-          id="isim"
-          name="isim"
+          id="productName"
+          name="productName"
           placeholder="Enter Name ..."
-          onChange={(e) => onValueChange(e)}
+          value={product.productName}
+          onChange={handleInputChange}
+          //Error input type search in google
         />        
-        <label htmlFor="barkod">Barkod </label>
+      
+        <label htmlFor="productType">Cinsi </label>
         <input
           type="text"
-          id="barkod"
-          name="barkod"
-          placeholder="Enter Barkod ..."
-          //value={product.barkod}
-          onChange={(e) => onValueChange(e)}
-          
-        />        
-        <label htmlFor="cinsi">Cinsi </label>
-        <input
-          type="text"
-          id="cinsi"
-          name="cinsi"
+          id="productType"
+          name="productType"
           placeholder="Enter Cinsi ..."
-          //value={product.cinsi}
-          onChange={(e) => onValueChange(e)}
+          value={product.productType}
+          onChange={handleInputChange}
 
         />        
-        <label htmlFor="menşei">Menşei </label>
+        <label htmlFor="productBarcode">Barkod </label>
         <input
           type="text"
-          id="menşei"
-          name="menşei"
+          id="productBarcode"
+          name="productBarcode"
+          placeholder="Enter Barkod ..."
+          value={product.productBarcode}
+          onChange={handleInputChange}
+          
+        />  
+        <label htmlFor="productOrigin">Menşei </label>
+        <input
+          type="text"
+          id="productOrigin"
+          name="productOrigin"
           placeholder="Enter menşei ..."
-          //value={product.menşei}
-          onChange={(e) => onValueChange(e)}
+          value={product.productOrigin}
+          onChange={handleInputChange}
 
-        />        
-        <button onClick={() => addProductDetails()} type="button">Add</button>
+        />
+        <div>
+        <button type="submit">Submit</button>
+        </div>        
+        
       </form>
     </div>
   );
 };
 
-export default AddProduct;
+const mapStateToProps = state => ({
+
+  productList:state.product.list
+
+})
+
+const mapActionToProps = {
+  createProduct: actions.create,
+  updateProduct: actions.update,
+}
+
+
+export default connect(mapStateToProps,mapActionToProps) (AddProduct);
+
+
+
+
+
+
+
+
+
+
+
+
+// const navigate = useNavigate()
+  // const addProductDetails = async () => {
+  //   await addProduct(product)
+  //   navigate('/products')
+
+  // }
