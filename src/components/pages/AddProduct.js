@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from "react";
+import React, { useEffect } from "react";
 import useOperations from "./useOperations";
 import { connect } from "react-redux";
 import * as actions from "../../actions/product"
 import './AddProduct.css'
+import { Button } from "../Button";
 
 
 
@@ -48,21 +49,24 @@ const AddProduct = (props) => {
 
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    
     if(validate()) 
     {
-      if(props.currentId === 0 )
+      if(props.currentId === 0 ) {
+      e.preventDefault()
       props.createProduct(product,()=>{window.alert('Eklendi')})
+    }
       else
       props.updateProduct(props.currentId,product,()=>{window.alert('Güncellendi')})
     }
   }
 
   useEffect(()=>{
-    if(props.currentId != 0)
+    if(props.currentId !== 0)
     setProduct({
-      ...props.productList?.find(x => x.id == props.currentId)
+      ...props.productList?.find(x => x.id === props.currentId)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[props.currentId])
   
   return (
@@ -119,7 +123,7 @@ const AddProduct = (props) => {
 
         />
         <div>
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
         </div>        
         
       </form>

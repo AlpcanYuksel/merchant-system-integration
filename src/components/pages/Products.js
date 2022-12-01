@@ -5,12 +5,13 @@ import "./Product.css";
 import AddProduct from "./AddProduct";
 
 
+
 const Products = (props) => {
   const [currentId, setCurrentId] = useState(0)
 
   useEffect(() => {
     props.fetchAllProducts();
-  }, []); //componentDidMount
+  }, [props]); //componentDidMount
 
   const onDelete = id => {
     if(window.confirm('Silmek istediğinden emin misin?'))
@@ -25,7 +26,6 @@ const Products = (props) => {
       <table className="styled-table">
         <thead>
           <tr>
-            <th style={{ textAlign: "center" }}>ID</th>
             <th style={{ textAlign: "center" }}>İsim</th>
             <th style={{ textAlign: "center" }}>Cinsi</th>
             <th style={{ textAlign: "center" }}>Barkod</th>
@@ -37,7 +37,6 @@ const Products = (props) => {
           {props.productList.map((product, index) => {
             return (
               <tr key={index} >
-                <td>{product.id}</td>
                 <td>{product.productName}</td>
                 <td>{product.productType}</td>
                 <td>{product.productBarcode}</td>

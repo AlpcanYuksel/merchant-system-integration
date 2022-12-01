@@ -1,10 +1,11 @@
 import Navbar from './components/Navbar/Navbar';
 import Products from './components/pages/Products';
-import SignUp from './components/Login/SignUp';
+import SıgnInOutContainer from './components/containers';
 import {Routes,Route} from "react-router-dom"
 import { store } from './actions/store';
 import { Provider } from 'react-redux';
 import './App.css';
+
 
 
 
@@ -26,7 +27,7 @@ function App() {
      <Navbar />
      <Routes>
        <Route path='/products' element={<Products />} />
-       <Route path='/auth' element={<SignUp />} />
+       <Route path='/auth' element={<SıgnInOutContainer />} />
      </Routes>
 
   </Provider>
