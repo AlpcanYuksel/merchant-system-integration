@@ -15,7 +15,7 @@ const formateData = data =>({
 export const fetchall = () => dispatch => {
     api.product().fetchAll()
         .then(response => {
-                console.log(response);
+                //console.log(response);
                 dispatch({
                     type:ACTION_TYPES.FETCH_ALL,
                     payload: response.data
